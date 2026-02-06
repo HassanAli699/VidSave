@@ -27,7 +27,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -240,8 +239,7 @@ public class HomeFragment extends Fragment {
             progressText.setVisibility(VISIBLE);
 
             // Check if percent == 100 but still processing
-            boolean isProcessing = status != null &&
-                    status.equals("Making Video Upload Ready Wait...");
+            boolean isProcessing = status != null && status.equals("Making Video Upload Ready Wait...");
 
             if (isProcessing) {
                 downloadProgress.setIndeterminate(true);
@@ -268,12 +266,7 @@ public class HomeFragment extends Fragment {
             progressText.setVisibility(VISIBLE);
             progressText.setText(error != null ? error : "Unknown error ❌");
 
-            Utils.showAnimatedToast(
-                    getActivity(),
-                    error != null ? error : "Something went wrong",
-                    R.drawable.alert_error,
-                    Utils.ToastDuration.SHORT
-            );
+            Utils.showAnimatedToast(getActivity(), error != null ? error : "Something went wrong", R.drawable.alert_error, Utils.ToastDuration.SHORT);
         }
     }
 
@@ -292,9 +285,7 @@ public class HomeFragment extends Fragment {
                 connection.connect();
 
                 int code = connection.getResponseCode();
-                if (code == HttpURLConnection.HTTP_MOVED_PERM ||
-                        code == HttpURLConnection.HTTP_MOVED_TEMP ||
-                        code == 307 || code == 308) {
+                if (code == HttpURLConnection.HTTP_MOVED_PERM || code == HttpURLConnection.HTTP_MOVED_TEMP || code == 307 || code == 308) {
                     String location = connection.getHeaderField("Location");
                     if (location != null && !location.isEmpty()) {
                         if (!location.startsWith("http")) {
@@ -332,21 +323,11 @@ public class HomeFragment extends Fragment {
                             urlInput.setText(pastedText.toString());
                             pasteLinkBtn.setImageResource(R.drawable.clear);
                             pasteLinkBtn.setTag("clear");
-                            Utils.showAnimatedToast(
-                                    getActivity(),
-                                    "Link pasted",
-                                    R.drawable.check_mark,
-                                    Utils.ToastDuration.SHORT
-                            );
+                            Utils.showAnimatedToast(getActivity(), "Link pasted", R.drawable.check_mark, Utils.ToastDuration.SHORT);
                         }
                     }
                 } else {
-                    Utils.showAnimatedToast(
-                            getActivity(),
-                            "Clipboard is empty",
-                            R.drawable.alert_error,
-                            Utils.ToastDuration.SHORT
-                    );
+                    Utils.showAnimatedToast(getActivity(), "Clipboard is empty", R.drawable.alert_error, Utils.ToastDuration.SHORT);
                 }
             }
         });
@@ -356,12 +337,7 @@ public class HomeFragment extends Fragment {
         downloadBtn.setOnClickListener(v -> {
 
             if (isDownloading) {
-                Utils.showAnimatedToast(
-                        getActivity(),
-                        "A download is already in progress",
-                        R.drawable.warning,
-                        Utils.ToastDuration.SHORT
-                );
+                Utils.showAnimatedToast(getActivity(), "A download is already in progress", R.drawable.warning, Utils.ToastDuration.SHORT);
                 return;
             }
 
@@ -381,62 +357,39 @@ public class HomeFragment extends Fragment {
     private void checkStoragePermissionAndContinue(Runnable onGranted) {
 
         // Android 10+ → app-specific storage → no permission needed
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q &&
-                Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q && Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
             onGranted.run();
             return;
         }
 
         // Android 13+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            if (ContextCompat.checkSelfPermission(
-                    requireContext(),
-                    Manifest.permission.READ_MEDIA_VIDEO
-            ) == PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_MEDIA_VIDEO) == PackageManager.PERMISSION_GRANTED) {
                 onGranted.run();
                 return;
             }
 
             if (shouldShowRequestPermissionRationale(Manifest.permission.READ_MEDIA_VIDEO)) {
-                Utils.showAnimatedToast(
-                        getActivity(),
-                        "We need video access to save downloaded videos to your device",
-                        R.drawable.warning,
-                        Utils.ToastDuration.LONG
-                );
+                Utils.showAnimatedToast(getActivity(), "We need video access to save downloaded videos to your device", R.drawable.warning, Utils.ToastDuration.LONG);
             }
 
             storagePermissionRequestInProgress = true;
-            requestPermissions(
-                    new String[]{Manifest.permission.READ_MEDIA_VIDEO},
-                    REQUEST_STORAGE
-            );
+            requestPermissions(new String[]{Manifest.permission.READ_MEDIA_VIDEO}, REQUEST_STORAGE);
             return;
         }
 
         // Android 9 and below
-        if (ContextCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
-        ) == PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             onGranted.run();
             return;
         }
 
         if (shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-            Utils.showAnimatedToast(
-                    getActivity(),
-                    "Storage permission is required to save videos",
-                    R.drawable.warning,
-                    Utils.ToastDuration.LONG
-            );
+            Utils.showAnimatedToast(getActivity(), "Storage permission is required to save videos", R.drawable.warning, Utils.ToastDuration.LONG);
         }
 
         storagePermissionRequestInProgress = true;
-        requestPermissions(
-                new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                REQUEST_STORAGE
-        );
+        requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_STORAGE);
     }
 
 
@@ -454,12 +407,7 @@ public class HomeFragment extends Fragment {
                     downloadProgress.setVisibility(INVISIBLE);
                     progressText.setVisibility(INVISIBLE);
 
-                    Utils.showAnimatedToast(
-                            getActivity(),
-                            "Please enter a valid URL",
-                            R.drawable.warning,
-                            Utils.ToastDuration.SHORT
-                    );
+                    Utils.showAnimatedToast(getActivity(), "Please enter a valid URL", R.drawable.warning, Utils.ToastDuration.SHORT);
                     return;
                 }
 
@@ -485,12 +433,7 @@ public class HomeFragment extends Fragment {
     private void proceedWithDownload() {
         if (downloadUrl == null) return;
 
-        Utils.showAnimatedToast(
-                getActivity(),
-                "Watch a short ad to start download",
-                R.drawable.warning,
-                Utils.ToastDuration.SHORT
-        );
+        Utils.showAnimatedToast(getActivity(), "Watch a short ad to start download", R.drawable.warning, Utils.ToastDuration.SHORT);
 
 
         // Show rewarded ad BEFORE download
@@ -513,84 +456,55 @@ public class HomeFragment extends Fragment {
 
     private boolean checkPermissions() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            return ContextCompat.checkSelfPermission(requireContext(),
-                    Manifest.permission.READ_MEDIA_VIDEO) == PackageManager.PERMISSION_GRANTED;
+            return ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_MEDIA_VIDEO) == PackageManager.PERMISSION_GRANTED;
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             return true; // No permission needed for app-specific directory
         } else {
-            return ContextCompat.checkSelfPermission(requireContext(),
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
+            return ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
         }
     }
 
     private void requestPermissions() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            requestPermissions(
-                    new String[]{Manifest.permission.READ_MEDIA_VIDEO},
-                    REQUEST_PERMISSION
-            );
+            requestPermissions(new String[]{Manifest.permission.READ_MEDIA_VIDEO}, REQUEST_PERMISSION);
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             // No permission needed
             startDownload();
         } else {
-            ActivityCompat.requestPermissions(requireActivity(),
-                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                    REQUEST_PERMISSION);
+            ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_PERMISSION);
         }
     }
 
     private void handlePermanentDenial(String permission, String message) {
         if (!shouldShowRequestPermissionRationale(permission)) {
-            Utils.showAnimatedToast(
-                    getActivity(),
-                    message + ". Enable it from Settings.",
-                    R.drawable.alert_error,
-                    Utils.ToastDuration.LONG
-            );
+            Utils.showAnimatedToast(getActivity(), message + ". Enable it from Settings.", R.drawable.alert_error, Utils.ToastDuration.LONG);
             openAppSettings();
         } else {
-            Utils.showAnimatedToast(
-                    getActivity(),
-                    message,
-                    R.drawable.alert_error,
-                    Utils.ToastDuration.SHORT
-            );
+            Utils.showAnimatedToast(getActivity(), message, R.drawable.alert_error, Utils.ToastDuration.SHORT);
         }
     }
 
     @Override
-    public void onRequestPermissionsResult(
-            int requestCode,
-            @NonNull String[] permissions,
-            @NonNull int[] grantResults
-    ) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
         if (requestCode == REQUEST_NOTIFICATIONS) {
             permissionRequestInProgress = false;
 
-            if (grantResults.length > 0 &&
-                    grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 startDownload();
             } else {
-                handlePermanentDenial(
-                        Manifest.permission.POST_NOTIFICATIONS,
-                        "Enable notifications from Settings to continue downloads"
-                );
+                handlePermanentDenial(Manifest.permission.POST_NOTIFICATIONS, "Enable notifications from Settings to continue downloads");
             }
         }
 
         if (requestCode == REQUEST_STORAGE) {
             storagePermissionRequestInProgress = false;
 
-            if (grantResults.length > 0 &&
-                    grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 startDownload();
             } else {
-                handlePermanentDenial(
-                        permissions[0],
-                        "Storage permission is required to save videos"
-                );
+                handlePermanentDenial(permissions[0], "Storage permission is required to save videos");
             }
         }
     }
@@ -608,32 +522,20 @@ public class HomeFragment extends Fragment {
             return;
         }
 
-        if (ContextCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.POST_NOTIFICATIONS
-        ) == PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
             onGranted.run();
             return;
         }
 
         // Show rationale if needed
         if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
-            Utils.showAnimatedToast(
-                    getActivity(),
-                    "We use notifications to show download progress and completion",
-                    R.drawable.warning,
-                    Utils.ToastDuration.LONG
-            );
+            Utils.showAnimatedToast(getActivity(), "We use notifications to show download progress and completion", R.drawable.warning, Utils.ToastDuration.LONG);
         }
 
         permissionRequestInProgress = true;
 
-        requestPermissions(
-                new String[]{Manifest.permission.POST_NOTIFICATIONS},
-                REQUEST_NOTIFICATIONS
-        );
+        requestPermissions(new String[]{Manifest.permission.POST_NOTIFICATIONS}, REQUEST_NOTIFICATIONS);
     }
-
 
 
 }
