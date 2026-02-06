@@ -1,0 +1,64 @@
+plugins {
+    alias(libs.plugins.android.application)
+    id("com.chaquo.python")
+}
+
+android {
+    namespace 'com.hassan.vidsave'
+    compileSdk 36
+
+    defaultConfig {
+        applicationId "com.hassan.vidsave"
+        minSdk 24
+        targetSdk 36
+        versionCode 6
+        versionName "1.5"
+        ndk {
+            abiFilters "arm64-v8a",  "x86_64"
+        }
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+}
+
+
+chaquopy  {
+    defaultConfig {
+        pip {
+            install("yt-dlp")
+        }
+        version = "3.13"
+    }
+}
+
+
+dependencies {
+    implementation libs.localbroadcastmanager
+    implementation libs.play.services.ads
+    implementation libs.appcompat
+    implementation libs.material
+    implementation libs.activity
+    implementation libs.constraintlayout
+    testImplementation libs.junit
+    androidTestImplementation libs.ext.junit
+    androidTestImplementation libs.espresso.core
+    implementation libs.ffmpeg.kit.full.gpl
+    implementation libs.glide
+    annotationProcessor libs.compiler
+    implementation libs.swiperefreshlayout
+    implementation libs.lottie
+    implementation libs.app.update
+    implementation libs.app.update.ktx
+}
+

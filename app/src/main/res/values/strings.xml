@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">VidSave</string>
+    <string name="paste_video_url_here_hint">Paste Video URL here…</string>
+    <string name="download_btn_txt">Download</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

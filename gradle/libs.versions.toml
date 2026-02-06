@@ -1,0 +1,43 @@
+[versions]
+agp = "9.0.0"
+appUpdate = "2.1.0"
+ffmpegKitFull = "2.1.0"
+ffmpegKitFullGpl = "1.1.0"
+glide = "4.16.0"
+gradle = "14.0.2"
+junit = "4.13.2"
+junitVersion = "1.2.1"
+espressoCore = "3.6.1"
+appcompat = "1.7.0"
+localbroadcastmanager = "1.1.0"
+lottie = "6.4.0"
+material = "1.12.0"
+activity = "1.12.2"
+constraintlayout = "2.2.1"
+playServicesAds = "24.9.0"
+swiperefreshlayout = "1.1.0"
+
+
+[libraries]
+app-update = { module = "com.google.android.play:app-update", version.ref = "appUpdate" }
+app-update-ktx = { module = "com.google.android.play:app-update-ktx", version.ref = "appUpdate" }
+compiler = { module = "com.github.bumptech.glide:compiler", version = "5.0.5" }
+ffmpeg-kit-full = { module = "com.antonkarpenko:ffmpeg-kit-full", version.ref = "ffmpegKitFull" }
+ffmpeg-kit-full-gpl = { module = "com.antonkarpenko:ffmpeg-kit-full-gpl", version = "2.1.0" }
+glide = { module = "com.github.bumptech.glide:glide", version = "5.0.5" }
+gradle = { module = "com.chaquo.python:gradle", version = "17.0.0" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+ext-junit = { group = "androidx.test.ext", name = "junit", version = "1.3.0" }
+espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version = "3.7.0" }
+appcompat = { group = "androidx.appcompat", name = "appcompat", version = "1.7.1" }
+localbroadcastmanager = { module = "androidx.localbroadcastmanager:localbroadcastmanager", version.ref = "localbroadcastmanager" }
+lottie = { module = "com.airbnb.android:lottie", version = "6.7.1" }
+material = { group = "com.google.android.material", name = "material", version = "1.13.0" }
+activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
+constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+play-services-ads = { module = "com.google.android.gms:play-services-ads", version.ref = "playServicesAds" }
+swiperefreshlayout = { module = "androidx.swiperefreshlayout:swiperefreshlayout", version = "1.2.0" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+

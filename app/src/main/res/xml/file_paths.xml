@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- App-specific movies directory -->
+    <external-files-path
+        name="vidsave_videos"
+        path="Movies/VidSave/" />
+
+    <!-- Optional: For older downloads folder -->
+    <external-path
+        name="downloads"
+        path="Download/VidSave/" />
+</paths>
