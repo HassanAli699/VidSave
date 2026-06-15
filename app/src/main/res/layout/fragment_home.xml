@@ -1,38 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/background_soft"
     tools:context=".fragments.HomeFragment">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:clipToPadding="false"
+        android:fillViewport="true"
+        android:overScrollMode="never">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="10dp"
-            android:background="@color/white">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="24dp">
 
+            <!-- Header -->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/apptitleLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:layout_marginStart="10dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/outerCard"
-                tools:ignore="UseCompoundDrawables">
+                android:paddingHorizontal="20dp"
+                android:paddingTop="16dp"
+                android:paddingBottom="8dp">
 
                 <ImageView
                     android:id="@+id/imageView"
-                    android:layout_width="33dp"
+                    android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:contentDescription="@string/app_name"
                     android:src="@mipmap/ic_launcher"
@@ -40,273 +39,536 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/appTitle"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins_bold"
-                    android:gravity="center_vertical"
-                    android:letterSpacing=".2"
-                    android:text="VidSave"
-                    android:layout_marginStart="10dp"
-                    android:textColor="@color/black"
-                    android:textSize="22sp"
+                    android:layout_marginStart="12dp"
+                    android:orientation="vertical"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/imageView"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintEnd_toStartOf="@id/browserBtn"
+                    app:layout_constraintStart_toEndOf="@id/imageView"
+                    app:layout_constraintTop_toTopOf="parent">
 
+                    <TextView
+                        android:id="@+id/appTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_bold"
+                        android:text="@string/app_name"
+                        android:textColor="@color/text_primary"
+                        android:textSize="20sp" />
 
-                <!--            <ImageView-->
-                <!--                android:id="@+id/modifyFoldersBtn"-->
-                <!--                android:layout_width="25dp"-->
-                <!--                android:layout_height="25dp"-->
-                <!--                android:layout_marginEnd="10dp"-->
-                <!--                android:foregroundGravity="right"-->
-                <!--                android:src="@drawable/folder"-->
-                <!--                app:layout_constraintBottom_toBottomOf="parent"-->
-                <!--                app:layout_constraintEnd_toEndOf="parent"-->
-                <!--                app:layout_constraintTop_toTopOf="parent" />-->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="@string/home_subtitle"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="12sp" />
+                </LinearLayout>
 
-
-
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/browserBtn"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:minHeight="40dp"
+                    android:text="@string/browser_btn"
+                    android:textAllCaps="false"
+                    android:textColor="@color/primaryRed"
+                    android:textSize="12sp"
+                    app:cornerRadius="20dp"
+                    app:icon="@drawable/link"
+                    app:iconGravity="textStart"
+                    app:iconPadding="6dp"
+                    app:iconSize="16dp"
+                    app:iconTint="@color/primaryRed"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:strokeColor="@color/primaryRed"
+                    app:strokeWidth="1dp" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-
+            <!-- Hero accent card -->
             <com.google.android.material.card.MaterialCardView
-                android:layout_marginTop="15dp"
                 android:id="@+id/outerCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:strokeColor="@color/transparent"
-                app:strokeWidth="0dp"
-                app:cardCornerRadius="35dp"
-                app:cardBackgroundColor="@color/backgroundColor"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/apptitleLayout">
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="8dp"
+                app:cardBackgroundColor="@color/surface"
+                app:cardCornerRadius="24dp"
+                app:cardElevation="2dp"
+                app:strokeColor="@color/divider"
+                app:strokeWidth="1dp">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_marginBottom="20dp"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
 
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/cardView"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:cardBackgroundColor="@color/cardColor"
-                        app:cardCornerRadius="35dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:strokeColor="@color/transparent"
-                        app:strokeWidth="0dp">
+                        android:background="@drawable/bg_gradient_accent"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="16dp">
 
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:layout_width="match_parent"
+                        <ImageView
+                            android:id="@+id/logo"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:contentDescription="@string/app_name"
+                            android:src="@drawable/evd_logo" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_margin="10dp"
-                            android:orientation="vertical"
-                            android:padding="10dp">
-
-
-                            <ImageView
-                                android:id="@+id/logo"
-                                android:layout_width="100dp"
-                                android:layout_height="100dp"
-                                android:background="@color/cardColor"
-                                android:src="@drawable/evd_logo"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
+                            android:layout_marginStart="14dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
 
                             <TextView
                                 android:id="@+id/titleText"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppins_bold"
-                                android:gravity="center"
-                                android:text="VidSave - Video Downloader"
-                                android:textColor="@color/black"
-                                android:textSize="22sp"
-                                app:layout_constraintBottom_toTopOf="@id/titleDesc"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@id/logo" />
+                                android:text="@string/home_hero_title"
+                                android:textColor="@color/white"
+                                android:textSize="18sp" />
 
                             <TextView
                                 android:id="@+id/titleDesc"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:alpha="0.92"
                                 android:fontFamily="@font/poppins_medium"
-                                android:gravity="center"
-                                android:text="Do Not Look Below! Explore VidSave, A Free Solution To Quickly Download Videos With Just One Click"
-                                android:textColor="@color/backgroundColor"
-                                android:textSize="12sp"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@id/titleText" />
+                                android:text="@string/home_hero_desc"
+                                android:textColor="@color/white"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+                    </LinearLayout>
 
+                    <!-- URL input -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cardView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        app:cardBackgroundColor="@color/surface_variant"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="0dp"
+                        app:strokeWidth="0dp">
+
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
 
                             <EditText
                                 android:id="@+id/urlInput"
                                 style="@style/textStyle"
-                                android:background="@drawable/edittext_bg"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="20dp"
-                                android:layout_marginBottom="30dp"
-                                android:drawableStart="@drawable/link"
-                                android:hint="@string/paste_video_url_here_hint"
-                                android:inputType="textNoSuggestions"
-                                android:padding="18dp"
-                                android:paddingEnd="50dp"
-                                android:focusable="true"
+                                android:background="@drawable/bg_input_modern"
                                 android:cursorVisible="true"
+                                android:drawableStart="@drawable/link"
+                                android:drawableTint="@color/text_secondary"
                                 android:ellipsize="end"
+                                android:focusable="true"
+                                android:fontFamily="@font/poppins_medium"
+                                android:hint="@string/paste_video_url_here_hint"
+                                android:inputType="textUri|textNoSuggestions"
+                                android:paddingStart="16dp"
+                                android:paddingTop="16dp"
+                                android:paddingEnd="52dp"
+                                android:paddingBottom="16dp"
                                 android:singleLine="true"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@+id/titleDesc"
+                                android:textColor="@color/text_primary"
+                                android:textColorHint="@color/text_tertiary"
+                                android:textSize="14sp"
                                 tools:ignore="RtlSymmetry" />
 
                             <ImageView
                                 android:id="@+id/pasteLink"
-                                android:layout_width="35dp"
-                                android:layout_height="35dp"
-                                android:layout_marginEnd="15dp"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:layout_gravity="center_vertical|end"
+                                android:layout_marginEnd="8dp"
+                                android:background="?attr/selectableItemBackgroundBorderless"
+                                android:contentDescription="@string/paste_link"
+                                android:padding="8dp"
                                 android:src="@drawable/copy"
-                                app:layout_constraintBottom_toBottomOf="@+id/urlInput"
+                                app:tint="@color/primaryRed" />
+                        </FrameLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- Link preview -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/linkPreviewCard"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:visibility="gone"
+                        app:cardBackgroundColor="@color/surface"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="0dp"
+                        app:strokeColor="@color/divider"
+                        app:strokeWidth="1dp"
+                        tools:visibility="visible">
+
+                        <!-- Loading skeleton -->
+                        <LinearLayout
+                            android:id="@+id/previewLoadingContainer"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:padding="12dp"
+                            android:visibility="gone"
+                            tools:visibility="visible">
+
+                            <FrameLayout
+                                android:layout_width="80dp"
+                                android:layout_height="80dp"
+                                android:background="@drawable/bg_skeleton">
+
+                                <com.google.android.material.progressindicator.CircularProgressIndicator
+                                    android:id="@+id/previewLoading"
+                                    android:layout_width="32dp"
+                                    android:layout_height="32dp"
+                                    android:layout_gravity="center"
+                                    android:indeterminate="true"
+                                    app:indicatorColor="@color/primaryRed"
+                                    app:indicatorSize="32dp"
+                                    app:trackColor="@color/divider"
+                                    app:trackThickness="3dp" />
+                            </FrameLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="12dp"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/poppins_medium"
+                                    android:text="@string/preview_loading"
+                                    android:textColor="@color/primaryRed"
+                                    android:textSize="12sp" />
+
+                                <View
+                                    android:layout_width="72dp"
+                                    android:layout_height="18dp"
+                                    android:layout_marginTop="10dp"
+                                    android:background="@drawable/bg_skeleton" />
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="14dp"
+                                    android:layout_marginTop="10dp"
+                                    android:background="@drawable/bg_skeleton" />
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="14dp"
+                                    android:layout_marginTop="6dp"
+                                    android:layout_marginEnd="48dp"
+                                    android:background="@drawable/bg_skeleton" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <!-- Loaded preview -->
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/previewContentContainer"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="12dp"
+                            android:visibility="gone"
+                            tools:visibility="gone">
+
+                            <com.google.android.material.imageview.ShapeableImageView
+                                android:id="@+id/previewThumbnail"
+                                android:layout_width="80dp"
+                                android:layout_height="80dp"
+                                android:background="@color/surface_variant"
+                                android:contentDescription="@string/video_thumbnail"
+                                android:scaleType="centerCrop"
+                                android:visibility="gone"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:shapeAppearanceOverlay="@style/RoundedImage16"
+                                tools:visibility="visible" />
+
+                            <LinearLayout
+                                android:id="@+id/previewTextContainer"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="12dp"
+                                android:orientation="vertical"
+                                app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintTop_toTopOf="@+id/urlInput" />
+                                app:layout_constraintStart_toEndOf="@id/previewThumbnail"
+                                app:layout_constraintTop_toTopOf="parent">
 
+                                <TextView
+                                    android:id="@+id/previewDomain"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/bg_chip_platform"
+                                    android:fontFamily="@font/poppins_medium"
+                                    android:paddingHorizontal="10dp"
+                                    android:paddingVertical="4dp"
+                                    android:textColor="@color/primaryRed"
+                                    android:textSize="10sp"
+                                    tools:text="youtube.com" />
 
+                                <TextView
+                                    android:id="@+id/previewTitle"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="6dp"
+                                    android:ellipsize="end"
+                                    android:fontFamily="@font/poppins_bold"
+                                    android:maxLines="2"
+                                    android:textColor="@color/text_primary"
+                                    android:textSize="14sp"
+                                    tools:text="Epic Video Title That Goes On Two Lines Max" />
+
+                                <TextView
+                                    android:id="@+id/previewDescription"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="4dp"
+                                    android:ellipsize="end"
+                                    android:fontFamily="@font/poppins_medium"
+                                    android:maxLines="2"
+                                    android:textColor="@color/text_secondary"
+                                    android:textSize="12sp"
+                                    android:visibility="gone"
+                                    tools:text="A short description of the video content goes here."
+                                    tools:visibility="visible" />
+                            </LinearLayout>
                         </androidx.constraintlayout.widget.ConstraintLayout>
                     </com.google.android.material.card.MaterialCardView>
 
-                    <Button
-                        android:id="@+id/downloadBtn"
-                        android:layout_width="wrap_content"
-                        android:minWidth="200dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginBottom="-25dp"
-                        android:backgroundTint="@color/primaryRed"
-                        android:fontFamily="@font/poppins_bold"
-                        android:padding="10dp"
-                        android:hapticFeedbackEnabled="true"
-                        android:text="@string/download_btn_txt"
-                        android:textColor="@color/white"
-                        android:textSize="18sp"
-                        app:layout_constraintBottom_toBottomOf="@+id/cardView"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent" />
-
-
-                    <ProgressBar
-                        android:id="@+id/downloadProgress"
-                        style="?android:attr/progressBarStyleHorizontal"
+                    <View
+                        android:id="@+id/cardBottomSpacer"
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:max="100"
-                        android:progress="90"
-                        android:indeterminateTint="@color/primaryRed"
-                        android:progressDrawable="@drawable/progress_bar_download"
-                        android:visibility="gone"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginBottom="10dp"
-                        app:layout_constraintTop_toBottomOf="@id/downloadBtn"
-
-                   />
-
-
-                    <TextView
-                        android:id="@+id/progressText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:text="0% Downloaded"
-                        android:textColor="#838383"
-                        android:fontFamily="@font/poppins_bold"
-                        android:visibility="gone"
-                        android:gravity="center"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/downloadProgress" />
-
-
-
-                    <TextView
-                        android:id="@+id/textView"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/poppins_medium"
-                        android:paddingHorizontal="20dp"
-                        android:paddingTop="10dp"
-                        android:text="Completely free with no hidden charges or subscriptions"
-                        android:textColor="#666666"
-                        android:textSize="13sp"
-                        android:textDirection="ltr"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/progressText"
-                      />
-
-
-                    <TextView
-                        android:id="@+id/textView2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingHorizontal="20dp"
-                        android:paddingTop="10dp"
-                        android:text="Download videos in Full HD, 4K and original quality"
-                        android:textColor="#666666"
-                        android:textDirection="ltr"
-                        android:textSize="13sp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView" />
-
-                    <TextView
-                        android:id="@+id/textView4"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingHorizontal="20dp"
-                        android:paddingTop="10dp"
-                        android:text="Lightning fast video downloads with optimized speed."
-                        android:textColor="#666666"
-                        android:textSize="13sp"
-                        app:layout_constraintTop_toBottomOf="@+id/textView2" />
-
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingHorizontal="20dp"
-                        android:paddingTop="10dp"
-                        android:layout_marginBottom="20dp"
-                        android:text="Do your work after hitting the download button and we will send you a notification letting you know when your download has finised."
-                        android:textColor="#666666"
-                        android:textSize="13sp"
-                        app:layout_constraintTop_toBottomOf="@+id/textView4" />
-
-
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
-
-
-
+                        android:layout_height="4dp" />
+                </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
+            <!-- Download CTA -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/downloadBtn"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/poppins_bold"
+                android:hapticFeedbackEnabled="true"
+                android:text="@string/download_btn_txt"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                app:backgroundTint="@color/primaryRed"
+                app:cornerRadius="28dp"
+                app:icon="@drawable/downloaded"
+                app:iconGravity="textStart"
+                app:iconPadding="8dp"
+                app:iconTint="@color/white" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            <com.google.android.material.progressindicator.LinearProgressIndicator
+                android:id="@+id/downloadProgress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="12dp"
+                android:visibility="gone"
+                app:indicatorColor="@color/primaryRed"
+                app:trackColor="@color/surface_variant"
+                app:trackCornerRadius="4dp"
+                app:trackThickness="6dp"
+                tools:progress="45"
+                tools:visibility="visible" />
 
+            <TextView
+                android:id="@+id/progressText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/poppins_medium"
+                android:gravity="center"
+                android:textColor="@color/text_secondary"
+                android:textSize="13sp"
+                android:visibility="gone"
+                tools:text="45% downloaded"
+                tools:visibility="visible" />
 
+            <!-- Features -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="24dp"
+                android:fontFamily="@font/poppins_bold"
+                android:text="@string/home_features_title"
+                android:textColor="@color/text_primary"
+                android:textSize="15sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="12dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/textView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_input_modern"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="14dp"
+                    android:paddingVertical="12dp">
+
+                    <View
+                        android:layout_width="8dp"
+                        android:layout_height="8dp"
+                        android:background="@drawable/bg_dot_accent" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="@string/home_feature_free"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="13sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/textView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/bg_input_modern"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="14dp"
+                    android:paddingVertical="12dp">
+
+                    <View
+                        android:layout_width="8dp"
+                        android:layout_height="8dp"
+                        android:background="@drawable/bg_dot_accent" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="@string/home_feature_quality"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="13sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/textView4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/bg_input_modern"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="14dp"
+                    android:paddingVertical="12dp">
+
+                    <View
+                        android:layout_width="8dp"
+                        android:layout_height="8dp"
+                        android:background="@drawable/bg_dot_accent" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="@string/home_feature_background"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="13sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Platforms -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/poppins_bold"
+                android:text="@string/home_platforms_title"
+                android:textColor="@color/text_primary"
+                android:textSize="15sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="12dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:layout_margin="6dp"
+                    android:background="@drawable/bg_input_modern"
+                    android:contentDescription="YouTube"
+                    android:padding="10dp"
+                    android:src="@drawable/youtube" />
+
+                <ImageView
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:layout_margin="6dp"
+                    android:background="@drawable/bg_input_modern"
+                    android:contentDescription="Instagram"
+                    android:padding="10dp"
+                    android:src="@drawable/instagram" />
+
+                <ImageView
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:layout_margin="6dp"
+                    android:background="@drawable/bg_input_modern"
+                    android:padding="10dp"
+                    android:src="@drawable/facebook" />
+
+                <ImageView
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:layout_margin="6dp"
+                    android:background="@drawable/bg_input_modern"
+                    android:padding="10dp"
+                    android:src="@drawable/pintrest" />
+            </LinearLayout>
+
+        </LinearLayout>
     </androidx.core.widget.NestedScrollView>
-
-
 </FrameLayout>

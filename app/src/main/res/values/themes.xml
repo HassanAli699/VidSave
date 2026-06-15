@@ -7,12 +7,13 @@
     </style>
 
     <style name="Theme.EveryVideoDownloader" parent="Base.Theme.EveryVideoDownloader">
-        <item name="android:statusBarColor">@color/white</item>
-        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:statusBarColor">@color/background_soft</item>
+        <item name="android:windowLightStatusBar">true</item>
         <item name="colorPrimary">@color/primaryRed</item>
-        <item name="colorPrimaryDark">@color/backgroundColor</item>
-        <item name="colorAccent">@color/cardColor</item>
+        <item name="colorPrimaryDark">@color/primaryRedDark</item>
+        <item name="colorAccent">@color/primaryRed</item>
         <item name="android:fontFamily">@font/poppins_medium</item>
+        <item name="android:windowBackground">@color/background_soft</item>
     </style>
 
 
@@ -32,6 +33,28 @@
         <item name="cornerSizeBottomLeft">15dp</item>
         <item name="cornerSizeTopRight">15dp</item>
         <item name="cornerSizeBottomRight">15dp</item>
+    </style>
+
+    <style name="RoundedImage16">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">16dp</item>
+    </style>
+
+    <style name="RoundedImageTop16">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopLeft">16dp</item>
+        <item name="cornerSizeTopRight">16dp</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+    </style>
+
+    <style name="BottomNavActiveIndicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:color">@color/primaryRedSoft</item>
+        <item name="shapeAppearance">@style/BottomNavIndicatorShape</item>
+    </style>
+
+    <style name="BottomNavIndicatorShape" parent="ShapeAppearance.Material3.Corner.Full">
+        <item name="cornerSize">12dp</item>
     </style>
 
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">

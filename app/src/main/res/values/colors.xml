@@ -2,8 +2,25 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="primaryRed">#D13646</color>
-    <color name="cardColor">#AFAFAF</color>
+    <color name="primaryRed">#E53948</color>
+    <color name="primaryRedDark">#C62828</color>
+    <color name="primaryRedSoft">#FFEBEE</color>
+    <color name="cardColor">#FFFFFF</color>
     <color name="backgroundColor">#303030</color>
     <color name="transparent">#00FFFFFF</color>
+
+    <!-- Modern palette -->
+    <color name="background_soft">#F4F6FB</color>
+    <color name="surface">#FFFFFF</color>
+    <color name="surface_elevated">#FFFFFF</color>
+    <color name="surface_variant">#EEF1F6</color>
+    <color name="text_primary">#111827</color>
+    <color name="text_secondary">#6B7280</color>
+    <color name="text_tertiary">#9CA3AF</color>
+    <color name="divider">#E5E7EB</color>
+    <color name="overlay_scrim">#66000000</color>
+    <color name="chip_bg">#F3F4F6</color>
+    <color name="success_green">#10B981</color>
+    <color name="gradient_start">#E53948</color>
+    <color name="gradient_end">#FF6B6B</color>
 </resources>
