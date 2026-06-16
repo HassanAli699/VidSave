@@ -178,11 +178,12 @@ def _entry_from_ytdlp_info(info, page_url):
     return _entry(url, title, thumb, duration, _score_url(url, title, bool(thumb), True))
 
 
-def _extract_with_ytdlp(page_url, cookies_str):
+def _extract_with_ytdlp(page_url, cookies_str, user_agent=""):
     if not YTDLP_OK:
         return []
     out = []
-    headers = {"User-Agent": DEFAULT_UA}
+    ua = (user_agent or "").strip() or DEFAULT_UA
+    headers = {"User-Agent": ua}
     if cookies_str:
         headers["Cookie"] = cookies_str
     opts = {
@@ -194,6 +195,8 @@ def _extract_with_ytdlp(page_url, cookies_str):
         "http_headers": headers,
         "noplaylist": False,
     }
+    if "tiktok.com" in page_url.lower():
+        opts["referer"] = "https://www.tiktok.com/"
     try:
         with yt.YoutubeDL(opts) as ydl:
             info = ydl.extract_info(page_url, download=False)
@@ -361,7 +364,35 @@ def _merge_entries(page_url, *lists):
     return results[:MAX_RESULTS]
 
 
-def scrape_videos_combined(page_url, cookies="", html_content="", js_entries_json=""):
+EMBEDDED_VIDEO_URL_RE = re.compile(
+    r'https?://[^\s"\'<>\\]+(?:mime_type=video|video/tos|\.mp4|\.m3u8|playAddr|downloadAddr)[^\s"\'<>\\]*',
+    re.IGNORECASE,
+)
+
+
+def _extract_urls_from_html_text(html, page_url, page_title=""):
+    out = []
+    if not html:
+        return out
+    seen = set()
+    for match in EMBEDDED_VIDEO_URL_RE.findall(html):
+        url = match.replace("\\u002F", "/").replace("\\/", "/").strip()
+        if _should_skip(url):
+            continue
+        key = _normalize_key(url)
+        if key in seen:
+            continue
+        seen.add(key)
+        out.append(_entry(url, page_title, "", 0, _score_url(url, page_title)))
+    return out
+
+
+def _is_google_search(url):
+    lower = (url or "").lower()
+    return "google." in lower and "/search" in lower
+
+
+def scrape_videos_combined(page_url, cookies="", html_content="", js_entries_json="", user_agent=""):
     """
     Combined scraper used by BrowserFragment.
     """
@@ -376,32 +407,42 @@ def scrape_videos_combined(page_url, cookies="", html_content="", js_entries_jso
         page_url = resolve_url(page_url)
         print(f"[Scraper] Expanded page URL: {page_url}")
 
+    if _is_google_search(page_url):
+        return json.dumps({
+            "error": "Paste the video link in the browser address bar above, then tap Go."
+        })
+
     js_entries = _parse_js_entries(js_entries_json, page_url)
-    ytdlp_entries = _extract_with_ytdlp(page_url, cookies_str)
+    ytdlp_entries = _extract_with_ytdlp(page_url, cookies_str, user_agent)
 
     html_entries = []
+    embedded_entries = []
     if html:
         try:
             html_entries = _scrape_html(html, page_url)
+            embedded_entries = _extract_urls_from_html_text(html, page_url)
         except Exception as e:
             print(f"[Scraper] HTML parse error: {e}")
     elif DEPS_OK:
         try:
+            ua = (user_agent or "").strip() or DEFAULT_UA
             response = requests.get(
                 page_url,
-                headers=_build_headers(cookies_str, page_url),
+                headers=_build_headers(cookies_str, page_url) | {"User-Agent": ua},
                 timeout=25,
                 allow_redirects=True,
             )
             if response.status_code < 400:
                 html_entries = _scrape_html(response.text, page_url)
+                embedded_entries = _extract_urls_from_html_text(response.text, page_url)
             elif response.status_code == 403:
-                # Still return JS / yt-dlp results; caller shows browser hint if empty
                 print("[Scraper] HTTP 403 — relying on WebView DOM + yt-dlp")
         except Exception as e:
             print(f"[Scraper] Fetch error: {e}")
 
-    entries = _merge_entries(page_url, js_entries, ytdlp_entries, html_entries)
+    entries = _merge_entries(
+        page_url, js_entries, ytdlp_entries, html_entries, embedded_entries
+    )
 
     if not entries:
         page_title = ""

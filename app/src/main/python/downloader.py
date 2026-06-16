@@ -105,20 +105,29 @@ def needs_browser(e, url=""):
 
     msg = str(e).lower()
 
+    # yt-dlp version nag — not a captcha
     if "confirm you are on the latest version" in msg:
+        return False
+
+    # Generic / CDN 403 — not a browser sign-in issue
+    if "403" in msg and ("[generic]" in msg or is_direct_media_url(url)):
+        return False
+
+    # Common extraction failures — not captcha (user may already be in browser)
+    if any(token in msg for token in (
+        "video not available", "video unavailable", "private video",
+        "this video is private", "has been removed", "not found",
+        "unsupported url", "no video formats",
+    )):
         return False
 
     if is_cloudflare_error(e):
         return True
 
-    # yt-dlp [generic] 403 on a CDN file — not a browser/captcha issue
-    if "[generic]" in msg and (is_direct_media_url(url) or "403" in msg):
-        return False
-
     if "[tiktok]" in msg and is_tiktok_page_url(url):
         return any(token in msg for token in (
-            "status code 0", "video not available", "unable to extract",
-            "login", "cookies",
+            "status code 0", "unable to extract", "login", "cookies",
+            "captcha", "verify",
         ))
 
     return any(token in msg for token in (
@@ -126,6 +135,7 @@ def needs_browser(e, url=""):
         "confirm you're not a bot", "verify you are human",
         "members only", "age-restricted",
         "authentication required", "session expired",
+        "captcha", "challenge",
     ))
 
 

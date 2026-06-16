@@ -163,7 +163,18 @@ public class HomeFragment extends Fragment implements MainActivity.DownloadUiLis
     private void openBrowserFragment(String url) {
         if (!isAdded() || getActivity() == null) return;
 
-        String loadUrl = UrlResolver.resolve(url);
+        if (UrlResolver.needsExpansion(url)) {
+            new Thread(() -> {
+                String resolved = UrlResolver.resolve(url);
+                if (getActivity() == null) return;
+                getActivity().runOnUiThread(() -> launchBrowser(resolved));
+            }).start();
+        } else {
+            launchBrowser(url);
+        }
+    }
+
+    private void launchBrowser(String loadUrl) {
         BrowserFragment browserFragment = BrowserFragment.newInstance(loadUrl);
         requireActivity().getSupportFragmentManager()
                 .beginTransaction()

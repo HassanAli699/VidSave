@@ -136,6 +136,7 @@ public class VideoPickerBottomSheet extends BottomSheetDialogFragment {
         intent.putExtra(DownloadService.EXTRA_COOKIES,     cookies);
         intent.putExtra(DownloadService.EXTRA_USER_AGENT,  userAgent);
         intent.putExtra(DownloadService.EXTRA_REFERER,     pageReferer);
+        intent.putExtra(DownloadService.EXTRA_FROM_BROWSER, true);
         ContextCompat.startForegroundService(requireContext(), intent);
     }
 

@@ -60,6 +60,35 @@ public final class AppUpdateHelper {
                 .addOnFailureListener(e -> Log.w(TAG, "getAppUpdateInfo failed", e));
     }
 
+    /** User-initiated check from Settings. Always shows feedback. */
+    public void checkForUpdateManually() {
+        appUpdateManager.getAppUpdateInfo()
+                .addOnSuccessListener(info -> {
+                    if (info.installStatus() == InstallStatus.DOWNLOADED) {
+                        showUpdateReadySnackbar();
+                        return;
+                    }
+                    if (info.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE) {
+                        showUpdateAvailableDialog(info);
+                        return;
+                    }
+                    if (info.updateAvailability()
+                            == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS) {
+                        startUpdateFlow(info, AppUpdateType.IMMEDIATE);
+                        return;
+                    }
+                    Utils.showAnimatedToast(activity,
+                            activity.getString(R.string.update_up_to_date),
+                            R.drawable.check_mark, Utils.ToastDuration.SHORT);
+                })
+                .addOnFailureListener(e -> {
+                    Log.w(TAG, "Manual update check failed", e);
+                    Utils.showAnimatedToast(activity,
+                            activity.getString(R.string.update_check_failed),
+                            R.drawable.alert_error, Utils.ToastDuration.SHORT);
+                });
+    }
+
     public void destroy() {
         dismissUpdateReadySnackbar();
         unregisterInstallListener();

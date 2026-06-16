@@ -52,6 +52,7 @@ public class DownloadService extends Service {
     public static final String EXTRA_OPEN_BROWSER = "open_browser";
 
     public static final String EXTRA_REFERER     = "referer";
+    public static final String EXTRA_FROM_BROWSER = "from_browser";
 
     private final IBinder binder = new LocalBinder();
     private int     lastProgress = -1;
@@ -60,6 +61,7 @@ public class DownloadService extends Service {
     private YtDlpHelper ytDlpHelper;
     private String currentDownloadUrl = "";
     private String currentRefererUrl  = "";
+    private boolean downloadFromBrowser = false;
 
     public class LocalBinder extends Binder {
         public DownloadService getService() { return DownloadService.this; }
@@ -88,6 +90,7 @@ public class DownloadService extends Service {
         String cookies    = intent.getStringExtra(EXTRA_COOKIES);
         String userAgent  = intent.getStringExtra(EXTRA_USER_AGENT);
         String referer    = intent.getStringExtra(EXTRA_REFERER);
+        downloadFromBrowser = intent.getBooleanExtra(EXTRA_FROM_BROWSER, false);
 
         if (url == null || url.trim().isEmpty()) {
             sendErrorBroadcast("Invalid download URL", "");
@@ -177,7 +180,12 @@ public class DownloadService extends Service {
 
                             if (error != null && error.startsWith(CLOUDFLARE_ERROR_PREFIX)) {
                                 String friendlyMsg = error.substring(CLOUDFLARE_ERROR_PREFIX.length());
-                                handleCaptchaError(getBrowserFallbackUrl(), friendlyMsg);
+                                if (downloadFromBrowser) {
+                                    showErrorNotification(friendlyMsg);
+                                    sendErrorBroadcast(friendlyMsg, currentRefererUrl);
+                                } else {
+                                    handleCaptchaError(getBrowserFallbackUrl(), friendlyMsg);
+                                }
                             } else {
                                 showErrorNotification(error);
                                 sendErrorBroadcast(error, currentDownloadUrl);
@@ -224,19 +232,25 @@ public class DownloadService extends Service {
     }
 
     private void handleCaptchaError(String url, String friendlyMessage) {
-        Log.d(TAG, "Captcha/403 — redirecting to browser: " + url);
+        if (UrlResolver.isDirectMediaUrl(url)) {
+            showErrorNotification(friendlyMessage);
+            sendErrorBroadcast(friendlyMessage, currentRefererUrl);
+            return;
+        }
+
+        Log.d(TAG, "Site block — redirecting to browser: " + url);
 
         PendingIntent tapPi = createMainActivityPendingIntent(url, true);
 
         NotificationCompat.Builder nb =
                 new NotificationCompat.Builder(this, CHANNEL_ID_COMPLETE)
                         .setSmallIcon(R.drawable.ic_notification_download)
-                        .setContentTitle("Captcha required")
-                        .setContentText("Tap to open the browser and complete the challenge.")
+                        .setContentTitle("Sign in required")
+                        .setContentText("Tap to open the browser and try again.")
                         .setStyle(new NotificationCompat.BigTextStyle()
                                 .bigText(friendlyMessage
                                         + "\n\nTap this notification to open the in-app browser, "
-                                        + "complete the captcha, then tap Download."))
+                                        + "then tap Download and choose \"This page\"."))
                         .setAutoCancel(true)
                         .setPriority(NotificationCompat.PRIORITY_HIGH)
                         .setCategory(NotificationCompat.CATEGORY_STATUS)

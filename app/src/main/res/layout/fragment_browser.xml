@@ -10,84 +10,120 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <!-- ── Toolbar ─────────────────────────────────────────────────── -->
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <!-- Toolbar -->
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:paddingStart="4dp"
-
-            android:paddingEnd="8dp"
+            android:layout_height="wrap_content"
             android:background="@color/white"
-            android:elevation="4dp">
+            android:elevation="4dp"
+            android:orientation="vertical"
+            android:paddingBottom="8dp">
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:paddingStart="4dp"
+                android:paddingEnd="4dp">
 
-            <!-- Web back -->
-            <ImageView
-                android:id="@+id/btnBack"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:alpha="0.35"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="Back"
-                android:padding="10dp"
-                android:src="@drawable/back_arrow"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                <ImageView
+                    android:id="@+id/btnBack"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:alpha="0.35"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="Back"
+                    android:padding="10dp"
+                    android:src="@drawable/back_arrow"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <!-- Web forward -->
-            <ImageView
-                android:id="@+id/btnForward"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:alpha="0.35"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="Forward"
-                android:padding="10dp"
-                android:src="@drawable/forward_arrow"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/btnBack"
-                app:layout_constraintTop_toTopOf="parent" />
+                <ImageView
+                    android:id="@+id/btnForward"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:alpha="0.35"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="Forward"
+                    android:padding="10dp"
+                    android:src="@drawable/forward_arrow"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/btnBack"
+                    app:layout_constraintTop_toTopOf="parent" />
 
+                <ImageView
+                    android:id="@+id/btnRefresh"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="Refresh"
+                    android:padding="10dp"
+                    android:src="@drawable/refresh"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/btnForward"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <!-- Refresh -->
-            <ImageView
-                android:id="@+id/btnRefresh"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="Refresh"
-                android:padding="10dp"
-                android:src="@drawable/refresh"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/btnForward"
-                app:layout_constraintTop_toTopOf="parent" />
+                <ImageView
+                    android:id="@+id/btnClose"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="Close browser"
+                    android:padding="10dp"
+                    android:src="@drawable/clear"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <!-- Address bar: paste link here and tap Go (not Google search) -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginHorizontal="8dp"
+                android:background="@drawable/bg_input_modern"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="12dp"
+                android:paddingEnd="4dp">
 
-            <!-- Close (go back to HomeFragment) -->
-            <ImageView
-                android:id="@+id/btnClose"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="Close browser"
-                android:padding="10dp"
-                android:src="@drawable/clear"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                <EditText
+                    android:id="@+id/browserUrlInput"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:hint="@string/browser_url_hint"
+                    android:imeOptions="actionGo"
+                    android:inputType="textUri|textNoSuggestions"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:textColor="@color/text_primary"
+                    android:textColorHint="@color/text_tertiary"
+                    android:textSize="13sp" />
 
+                <ImageView
+                    android:id="@+id/btnPasteUrl"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="@string/paste_link"
+                    android:padding="8dp"
+                    android:src="@drawable/copy"
+                    app:tint="@color/primaryRed" />
 
+                <ImageView
+                    android:id="@+id/btnGoUrl"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="@string/browser_go"
+                    android:padding="8dp"
+                    android:src="@drawable/link"
+                    app:tint="@color/primaryRed" />
+            </LinearLayout>
+        </LinearLayout>
 
-
-
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <!-- ── Page load progress bar ──────────────────────────────────── -->
         <ProgressBar
             android:id="@+id/webProgressBar"
             style="@android:style/Widget.ProgressBar.Horizontal"
@@ -96,7 +132,6 @@
             android:max="100"
             android:visibility="gone" />
 
-        <!-- ── WebView ─────────────────────────────────────────────────── -->
         <WebView
             android:id="@+id/webView"
             android:layout_width="match_parent"
@@ -105,19 +140,17 @@
 
     </LinearLayout>
 
-    <!-- ── Download FAB ──────────────────────────────────────────────── -->
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/fabDownload"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-
-        android:layout_marginBottom="60dp"
         android:layout_marginEnd="10dp"
-        android:text="Download"
-        app:icon="@drawable/evd_logo"
+        android:layout_marginBottom="60dp"
+        android:text="@string/browser_download_fab"
         app:backgroundTint="?attr/colorPrimary"
-        android:textColor="@android:color/white"
-        app:iconTint="@android:color/white" />
+        app:icon="@drawable/evd_logo"
+        app:iconTint="@android:color/white"
+        android:textColor="@android:color/white" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

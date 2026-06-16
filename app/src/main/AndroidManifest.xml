@@ -53,6 +53,11 @@
             android:exported="false"
             android:launchMode="singleTop"/>
 
+        <activity
+            android:name=".HowToGuideActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity" />
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.hassan.vidsavedownloader.fileprovider"

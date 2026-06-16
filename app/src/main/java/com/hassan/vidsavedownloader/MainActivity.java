@@ -15,6 +15,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.hassan.vidsavedownloader.fragments.BrowserFragment;
 import com.hassan.vidsavedownloader.fragments.DownloadedFragment;
 import com.hassan.vidsavedownloader.fragments.HomeFragment;
+import com.hassan.vidsavedownloader.fragments.SettingsFragment;
 import com.hassan.vidsavedownloader.monetization.AdMob;
 import com.hassan.vidsavedownloader.services.DownloadService;
 import com.hassan.vidsavedownloader.utils.AppUpdateHelper;
@@ -74,10 +75,15 @@ public class MainActivity extends AppCompatActivity {
 
         bottomNav.setOnItemSelectedListener(item -> {
             Fragment selectedFragment;
-            if (item.getItemId() == R.id.nav_home) {
+            int id = item.getItemId();
+            if (id == R.id.nav_home) {
                 selectedFragment = new HomeFragment();
-            } else {
+            } else if (id == R.id.nav_downloaded) {
                 selectedFragment = new DownloadedFragment();
+            } else if (id == R.id.nav_settings) {
+                selectedFragment = new SettingsFragment();
+            } else {
+                return false;
             }
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragmentContainer, selectedFragment)
@@ -314,6 +320,20 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 openBrowserForUrl(lastErrorSourceUrl);
             }
+        }
+    }
+
+    public void checkForUpdatesManually() {
+        if (appUpdateHelper != null) {
+            appUpdateHelper.checkForUpdateManually();
+        }
+    }
+
+    /** Opens the in-app Library tab (video gallery). */
+    public void openLibraryTab() {
+        BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
+        if (bottomNav != null) {
+            bottomNav.setSelectedItemId(R.id.nav_downloaded);
         }
     }
 

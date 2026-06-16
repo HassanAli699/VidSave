@@ -9,6 +9,14 @@
     <string name="home_hero_title">Download any video</string>
     <string name="home_hero_desc">Paste a link, preview it, and save in one tap</string>
     <string name="browser_btn">Browser</string>
+    <string name="browser_url_hint">Paste video link here, then tap Go</string>
+    <string name="browser_go">Go</string>
+    <string name="browser_download_fab">Download</string>
+    <string name="browser_paste_empty">Clipboard is empty</string>
+    <string name="browser_paste_done">Link pasted — tap Go</string>
+    <string name="browser_invalid_url">Enter a valid http(s) link</string>
+    <string name="browser_use_address_bar">Paste the video link in the address bar above, then tap Go</string>
+    <string name="browser_scan_wait">Page still loading… try again in a moment</string>
     <string name="paste_link">Paste link</string>
     <string name="preview_loading">Fetching preview…</string>
     <string name="video_thumbnail">Video thumbnail</string>
@@ -35,4 +43,43 @@
     <string name="downloaded_empty_desc">Videos you save will appear here.\nGo to Home and paste a link to get started.</string>
     <string name="refresh_library">Refresh library</string>
     <string name="play_video">Play video</string>
+
+    <!-- Bottom nav -->
+    <string name="nav_home">Home</string>
+    <string name="nav_downloaded">Library</string>
+    <string name="nav_settings">Settings</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_section_general">General</string>
+    <string name="settings_section_about">About</string>
+    <string name="settings_how_to">How to use VidSave</string>
+    <string name="settings_how_to_desc">Step-by-step guide with visuals</string>
+    <string name="settings_check_updates">Check for updates</string>
+    <string name="settings_check_updates_desc">Search Google Play for a new version</string>
+    <string name="settings_download_folder">Download folder</string>
+    <string name="settings_download_folder_desc">Tap to open your saved videos (%1$d videos)</string>
+    <string name="settings_open_folder_chooser">Open in Gallery</string>
+    <string name="settings_opening_library">Opening your video library…</string>
+    <string name="settings_version_format">Version %1$s</string>
+    <string name="settings_version_unknown">Version unknown</string>
+    <string name="settings_build_format">Build %1$d</string>
+    <string name="settings_about_desc">VidSave lets you download videos from popular platforms. Paste a link on Home, or use the in-app browser when a site requires sign-in. Saved videos appear in Library.</string>
+    <string name="update_up_to_date">You\'re on the latest version</string>
+    <string name="update_check_failed">Could not check for updates. Try again later.</string>
+
+    <!-- How-to guide -->
+    <string name="how_to_title">How to use VidSave</string>
+    <string name="how_to_intro_title">Save any video in 4 steps</string>
+    <string name="how_to_intro_desc">Follow the guide below — each step shows what you\'ll see in the app.</string>
+    <string name="how_to_step1_title">Copy &amp; paste the link</string>
+    <string name="how_to_step1_desc">Copy the video URL from TikTok, Instagram, YouTube, Facebook, or any site. On Home, tap the paste icon or long-press the input field.</string>
+    <string name="how_to_step2_title">Preview &amp; download</string>
+    <string name="how_to_step2_desc">Wait for the preview thumbnail to load, then tap Download Video. Progress appears on screen and in your notification bar.</string>
+    <string name="how_to_step3_title">Use the browser when needed</string>
+    <string name="how_to_step3_desc">If download fails or the site asks you to sign in, tap Browser. Paste the link in the address bar (not Google search), tap Go, wait for the page to load, then tap Download and choose \"This page\".</string>
+    <string name="how_to_step4_title">Find videos in Library</string>
+    <string name="how_to_step4_desc">Open the Library tab to play, share, or manage everything you\'ve saved. Pull down to refresh the list.</string>
+    <string name="how_to_tips_title">Quick tips</string>
+    <string name="how_to_tips_body">• Always paste the full video page URL, not a search result.\n• On TikTok, choose \"This page\" instead of a direct file link.\n• Wait for the page to finish loading before tapping Download in the browser.\n• Check Settings for your download folder path and app updates.</string>
 </resources>
